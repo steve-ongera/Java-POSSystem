@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<!-- Save as: src/main/resources/fxml/pos-main.fxml -->
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pos.controller.POSController">
+   <top>
+      <!-- Header -->
+      <VBox styleClass="header">
+         <HBox alignment="CENTER_LEFT" spacing="20.0">
+            <Label styleClass="title" text="Modern POS System" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="timeLabel" styleClass="time-label" text="00:00:00" />
+         </HBox>
+         <padding>
+            <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+         </padding>
+      </VBox>
+   </top>
+   
+   <center>
+      <!-- Main Content Area -->
+      <HBox spacing="10.0">
+         
+         <!-- Left Panel - Products -->
+         <VBox prefWidth="400.0" styleClass="left-panel">
+            <Label styleClass="section-title" text="Products" />
+            
+            <!-- Product Categories -->
+            <HBox spacing="10.0">
+               <Button fx:id="allCategoryBtn" mnemonicParsing="false" onAction="#showAllProducts" styleClass="category-btn, active" text="All" />
+               <Button fx:id="beveragesCategoryBtn" mnemonicParsing="false" onAction="#showBeverages" styleClass="category-btn" text="Beverages" />
+               <Button fx:id="foodCategoryBtn" mnemonicParsing="false" onAction="#showFood" styleClass="category-btn" text="Food" />
+               <Button fx:id="snacksCategoryBtn" mnemonicParsing="false" onAction="#showSnacks" styleClass="category-btn" text="Snacks" />
+            </HBox>
+            
+            <!-- Products Grid -->
+            <ScrollPane fitToWidth="true" styleClass="products-scroll">
+               <GridPane fx:id="productsGrid" hgap="10.0" vgap="10.0" styleClass="products-grid">
+                  <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+               </GridPane>
+            </ScrollPane>
+            
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
+         </VBox>
+         
+         <!-- Right Panel - Cart and Checkout -->
+         <VBox prefWidth="500.0" styleClass="right-panel">
+            
+            <!-- Barcode Scanner -->
+            <VBox styleClass="scanner-section">
+               <Label styleClass="section-title" text="Barcode Scanner" />
+               <HBox spacing="10.0">
+                  <TextField fx:id="barcodeField" onAction="#handleBarcodeScanned" promptText="Scan or enter barcode..." HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#handleBarcodeScanned" styleClass="scan-btn" text="Add" />
+               </HBox>
+            </VBox>
+            
+            <!-- Cart -->
+            <VBox styleClass="cart-section" VBox.vgrow="ALWAYS">
+               <HBox alignment="CENTER_LEFT">
+                  <Label styleClass="section-title" text="Shopping Cart" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="clearCartBtn" mnemonicParsing="false" onAction="#handleClearCart" styleClass="clear-btn" text="Clear Cart" />
+               </HBox>
+               
+               <TableView fx:id="cartTable" styleClass="cart-table" VBox.vgrow="ALWAYS">
+                  <columns>
+                     <TableColumn fx:id="productNameColumn" prefWidth="150.0" text="Product" />
+                     <TableColumn fx:id="quantityColumn" prefWidth="60.0" text="Qty" />
+                     <TableColumn fx:id="priceColumn" prefWidth="80.0" text="Price" />
+                     <TableColumn fx:id="totalColumn" prefWidth="80.0" text="Total" />
+                     <TableColumn fx:id="actionColumn" prefWidth="80.0" text="Action" />
+                  </columns>
+                  <columnResizePolicy>
+                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                  </columnResizePolicy>
+               </TableView>
+            </VBox>
+            
+            <!-- Totals -->
+            <VBox styleClass="totals-section">
+               <HBox styleClass="total-line">
+                  <Label text="Subtotal:" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="subtotalLabel" styleClass="amount" text="$0.00" />
+               </HBox>
+               <HBox styleClass="total-line">
+                  <Label text="Tax (8%):" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="taxLabel" styleClass="amount" text="$0.00" />
+               </HBox>
+               <Separator />
+               <HBox styleClass="total-line, final-total">
+                  <Label styleClass="total-label" text="Total:" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="totalLabel" styleClass="total-amount" text="$0.00" />
+               </HBox>
+            </VBox>
+            
+            <!-- Payment and Checkout -->
+            <VBox styleClass="checkout-section">
+               <HBox spacing="10.0">
+                  <Label text="Payment Method:" />
+                  <ComboBox fx:id="paymentMethodCombo" prefWidth="120.0" />
+               </HBox>
+               
+               <HBox spacing="10.0">
+                  <Button fx:id="checkoutBtn" mnemonicParsing="false" onAction="#handleCheckout" styleClass="checkout-btn" text="Process Payment" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#handleNewTransaction" styleClass="new-transaction-btn" text="New Sale" />
+               </HBox>
+            </VBox>
+            
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
+         </VBox>
+         
+      </HBox>
+   </center>
+   
+   <bottom>
+      <!-- Status Bar -->
+      <HBox alignment="CENTER_LEFT" styleClass="status-bar">
+         <Label fx:id="statusLabel" text="Ready" />
+         <Region HBox.hgrow="ALWAYS" />
+         <Label fx:id="connectionStatusLabel" text="Database: Connected" />
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>
